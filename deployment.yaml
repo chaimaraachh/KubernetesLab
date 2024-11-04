@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-hello
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: node-hello
+  template:
+    metadata:
+      labels:
+        app: node-hello
+    spec:
+      containers:
+      - name: node-hello
+        image: chaimaraach/node-hello:latest
+        ports:
+        - containerPort: 3000
