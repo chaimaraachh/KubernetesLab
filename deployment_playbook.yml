@@ -1,0 +1,22 @@
+---
+- name: Copy and apply Kubernetes resources on Minikube
+  hosts: minikube
+  tasks:
+    - name: Copy Kubernetes YAML files to Minikube
+      ansible.builtin.copy:
+        src: "/var/lib/jenkins/workspace/Kubernetes Lab/{{ item }}"
+        dest: "/home/minikube/{{ item }}"
+        mode: '0644'
+      loop:
+        - deployment.yaml
+        - fluentd-configmap.yaml
+        - fluentd-daemonset.yaml
+        - service.yaml
+
+    - name: Apply Kubernetes YAML files on Minikube
+      ansible.builtin.shell: "kubectl apply -f /home/minikube/{{ item }}"
+      loop:
+        - deployment.yaml
+        - fluentd-configmap.yaml
+        - fluentd-daemonset.yaml
+        - service.yaml
